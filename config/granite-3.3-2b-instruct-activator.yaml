@@ -27,14 +27,14 @@ spec:
                 response_trailer_mode: "SKIP"
               grpc_service:
                 envoy_grpc:
-                  cluster_name: outbound|9002||granite-3-2b-activator.sza.svc.cluster.local
+                  cluster_name: outbound|9002||granite-3-2b-activator.pytorch-demo.svc.cluster.local
 ---
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: granite-3-2b-activator
 spec:
-  host: granite-3-2b-activator.sza.svc.cluster.local
+  host: granite-3-2b-activator.pytorch-demo.svc.cluster.local
   trafficPolicy:
       tls:
         mode: SIMPLE

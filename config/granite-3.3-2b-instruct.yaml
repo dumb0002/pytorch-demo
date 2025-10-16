@@ -3,7 +3,7 @@ kind: DestinationRule
 metadata:
   name: granite-3-2b-epp
 spec:
-  host: granite-3-2b-epp.sza.svc.cluster.local
+  host: granite-3-2b-epp.pytorch-demo.svc.cluster.local
   trafficPolicy:
     tls:
       insecureSkipVerify: true
