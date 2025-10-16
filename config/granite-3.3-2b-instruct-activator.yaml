@@ -10,7 +10,7 @@ spec:
         vhost:
           name: "*:80"
           route:
-            name: sza.granite-3-2b.0 # TODO: what .0?
+            name: pytorch-demo.granite-3-2b.0 # TODO: what .0?
     patch:
       operation: MERGE
       value:
