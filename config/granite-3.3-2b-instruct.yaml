@@ -52,7 +52,7 @@ spec:
         - --pool-name
         - granite-3.3-2b-epp
         - --pool-namespace
-        - sza
+        - pytorch-demo
         - --pool-group
         - inference.networking.x-k8s.io
         - --zap-encoder
