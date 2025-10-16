@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: granite-3.3-2b-activator
+  name: granite-3-2b-activator
 spec:
   configPatches:
   - applyTo: HTTP_ROUTE
@@ -10,7 +10,7 @@ spec:
         vhost:
           name: "*:80"
           route:
-            name: sza.granite-3.3-2b.0 # TODO: what .0?
+            name: sza.granite-3-2b.0 # TODO: what .0?
     patch:
       operation: MERGE
       value:
@@ -27,14 +27,14 @@ spec:
                 response_trailer_mode: "SKIP"
               grpc_service:
                 envoy_grpc:
-                  cluster_name: outbound|9002||granite-3.3-2b-activator.sza.svc.cluster.local
+                  cluster_name: outbound|9002||granite-3-2b-activator.sza.svc.cluster.local
 ---
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: granite-3.3-2b-activator
+  name: granite-3-2b-activator
 spec:
-  host: granite-3.3-2b-activator.sza.svc.cluster.local
+  host: granite-3-2b-activator.sza.svc.cluster.local
   trafficPolicy:
       tls:
         mode: SIMPLE
@@ -43,15 +43,15 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: granite-3.3-2b-activator
+  name: granite-3-2b-activator
 spec:
   selector:
     matchLabels:
-      app: granite-3.3-2b-activator
+      app: granite-3-2b-activator
   template:
     metadata:
       labels:
-        app: granite-3.3-2b-activator
+        app: granite-3-2b-activator
     spec:
       containers:
       - name: activator
@@ -59,7 +59,7 @@ spec:
         imagePullPolicy: Never
         args:
         - --pool-name
-        - granite-3.3-2b-epp
+        - granite-3-2b-epp
         - --pool-namespace
         - pytorch-demo
         - --pool-group
@@ -80,10 +80,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: granite-3.3-2b-activator
+  name: granite-3-2b-activator
 spec:
   selector:
-    app: granite-3.3-2b-activator
+    app: granite-3-2b-activator
   ports:
   - name: grpc-ext-proc
     port: 9002

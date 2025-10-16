@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: granite-3.3-2b
+  name: granite-3-2b
 spec:
   parentRefs:
   - group: gateway.networking.k8s.io
@@ -11,7 +11,7 @@ spec:
     - backendRefs:
       - group: inference.networking.x-k8s.io
         kind: InferencePool
-        name: granite-3.3-2b-epp
+        name: granite-3-2b-epp
         port: 8000
       filters:
       - type: URLRewrite
