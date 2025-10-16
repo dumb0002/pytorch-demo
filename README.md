@@ -5,14 +5,16 @@
 
 1. Install the Inference Gateway Extension Istio implementation:
 
-a) Install:
+   a) Install:
     ```shell
     ./install-igw.sh
     ```
-b) Verify that the components are deployed and ready:
+
+   b) Verify that the components are deployed and ready:
    ```shell
    kubectl -n istio-system  get pods
    ```
+   
    Expected output:
    ```console
     NAME                      READY   STATUS    RESTARTS   AGE
@@ -27,6 +29,7 @@ b) Verify that the components are deployed and ready:
     ```
 
 3. Deploy the EPP + Activator and associated resources:
+
    a) Install: 
     ```shell
     kubectl apply -f config/
