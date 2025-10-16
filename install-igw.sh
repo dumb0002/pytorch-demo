@@ -15,9 +15,4 @@ helmfile apply -f istio.helmfile.yaml
 popd
 log_success "Istio gateway installed."
 
-pushd docs/monitoring/scripts > /dev/null
-./install-prometheus-grafana.sh
-popd
-log_success "Prometheus and Grafana installed."
-
 popd # TMP_DIR
