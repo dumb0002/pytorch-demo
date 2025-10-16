@@ -6,7 +6,7 @@
 1. Install the Inference Gateway Extension Istio implementation:
 
     ```shell
-    ./1-install-igw.sh
+    ./install-igw.sh
     ```
 
 2. (Optional) Create the namespace and switch to it:
