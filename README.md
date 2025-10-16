@@ -48,4 +48,4 @@
     sza-istio-567ff7fb88-dfjm8                1/1     Running   0          14s
     ```
 
-    NB: these are modified instructions extracted from the llm-d-experiments [here](https://github.com/lionelvillard/llm-d-experiments/tree/main/scale-zero-activator)
+    NB: these are modified instructions extracted from the llm-d-experiments repo [here](https://github.com/lionelvillard/llm-d-experiments/tree/main/scale-zero-activator)
