@@ -47,3 +47,5 @@
     granite-3-2b-epp-75d888d66f-c6kff         1/1     Running   0          14s
     sza-istio-567ff7fb88-dfjm8                1/1     Running   0          14s
     ```
+
+    NB: these are modified instructions extracted from the llm-d-experiments [here](https://github.com/lionelvillard/llm-d-experiments/tree/main/scale-zero-activator)
