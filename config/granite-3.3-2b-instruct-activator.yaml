@@ -56,7 +56,7 @@ spec:
       containers:
       - name: activator
         image: quay.io/braulio/llm-d-activator/activator:v1
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         args:
         - --pool-name
         - granite-3-2b-epp
