@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: activator
-        image: kind.local/llm-d-activator/activator:dev
+        image: quay.io/braulio/llm-d-activator/activator:v1
         imagePullPolicy: Never
         args:
         - --pool-name
