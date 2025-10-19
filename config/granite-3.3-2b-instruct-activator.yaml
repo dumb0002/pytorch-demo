@@ -75,7 +75,7 @@ spec:
         - containerPort: 9003
           name: grpc-health
           protocol: TCP
-      serviceAccountName: default
+      serviceAccountName: activator
 ---
 apiVersion: v1
 kind: Service
@@ -90,3 +90,8 @@ spec:
     protocol: TCP
     targetPort: 9002
   type: ClusterIP
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: activator

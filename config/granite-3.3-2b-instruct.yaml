@@ -97,11 +97,17 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: plugins-config-volume
+      serviceAccountName: epp
       volumes:
       - configMap:
           defaultMode: 420
           name: epp
         name: plugins-config-volume
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: epp
 ---
 apiVersion: v1
 kind: Service

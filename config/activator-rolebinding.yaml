@@ -8,4 +8,4 @@ roleRef:
   name: activator
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: activator
