@@ -21,9 +21,9 @@ spec:
               processing_mode:
                 request_header_mode: "SEND"
                 response_header_mode: "SKIP"
-                request_body_mode: "FULL_DUPLEX_STREAMED"
+                request_body_mode: "NONE"
                 response_body_mode: "NONE"
-                request_trailer_mode: "SEND"
+                request_trailer_mode: "SKIP"
                 response_trailer_mode: "SKIP"
               grpc_service:
                 envoy_grpc:
@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: activator
-        image: quay.io/braulio/llm-d-activator/activator:v1
+        image: quay.io/braulio/llm-d-activator/activator:dev3
         imagePullPolicy: IfNotPresent
         args:
         - --pool-name
@@ -91,7 +91,3 @@ spec:
     targetPort: 9002
   type: ClusterIP
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: activator

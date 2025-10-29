@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: llama3-8b-instruct-activator
+  name: deepseek-r1-32b-activator
 spec:
   configPatches:
   - applyTo: HTTP_ROUTE
@@ -10,7 +10,7 @@ spec:
         vhost:
           name: "*:80"
           route:
-            name: pytorch-demo.llama3-8b.0 # TODO: what .0?
+            name: pytorch-demo.deepseek-r1-32b.0 # TODO: what .0?
     patch:
       operation: MERGE
       value:
@@ -27,14 +27,14 @@ spec:
                 response_trailer_mode: "SKIP"
               grpc_service:
                 envoy_grpc:
-                  cluster_name: outbound|9002||llama3-8b-instruct-activator.pytorch-demo.svc.cluster.local
+                  cluster_name: outbound|9002||deepseek-r1-32b-activator.pytorch-demo.svc.cluster.local
 ---
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: llama3-8b-instruct-activator
+  name: deepseek-r1-32b-activator
 spec:
-  host: llama3-8b-instruct-activator.pytorch-demo.svc.cluster.local
+  host: deepseek-r1-32b-activator.pytorch-demo.svc.cluster.local
   trafficPolicy:
       tls:
         mode: SIMPLE
@@ -43,15 +43,15 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: llama3-8b-instruct-activator
+  name: deepseek-r1-32b-activator
 spec:
   selector:
     matchLabels:
-      app: llama3-8b-instruct-activator
+      app: deepseek-r1-32b-activator
   template:
     metadata:
       labels:
-        app: llama3-8b-instruct-activator
+        app: deepseek-r1-32b-activator
     spec:
       containers:
       - name: activator
@@ -59,7 +59,7 @@ spec:
         imagePullPolicy: IfNotPresent
         args:
         - --pool-name
-        - llama3-8b-instruct-epp
+        - deepseek-r1-32b-epp
         - --pool-namespace
         - pytorch-demo
         - --pool-group
@@ -80,10 +80,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: llama3-8b-instruct-activator
+  name: deepseek-r1-32b-activator
 spec:
   selector:
-    app: llama3-8b-instruct-activator
+    app: deepseek-r1-32b-activator
   ports:
   - name: grpc-ext-proc
     port: 9002
