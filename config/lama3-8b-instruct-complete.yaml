@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: granite-3-2b
+  name: llama3-8b
 spec:
   parentRefs:
   - group: gateway.networking.k8s.io
@@ -11,7 +11,7 @@ spec:
     - backendRefs:
       - group: inference.networking.x-k8s.io
         kind: InferencePool
-        name: granite-3-2b-epp
+        name: llama3-8b-instruct-epp
         port: 8000
       filters:
       - type: URLRewrite
@@ -22,17 +22,20 @@ spec:
       matches:
       - path:
           type: PathPrefix
-          value: /granite3
+          value: /llama3
+        # headers:
+        # - type: Exact
+        #   name: X-Gateway-Model-Name
+        #   value: 'meta-llama/Llama-3.1-8B-Instruct'
       timeouts:
         request: 300s
 ---
-
 apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
-  name: granite-3-2b-epp
+  name: llama3-8b-instruct-epp
 spec:
-  host: granite-3-2b-epp.pytorch-demo.svc.cluster.local
+  host: llama3-8b-instruct-epp.pytorch-demo.svc.cluster.local
   trafficPolicy:
     tls:
       insecureSkipVerify: true
@@ -41,46 +44,41 @@ spec:
 apiVersion: inference.networking.x-k8s.io/v1alpha2
 kind: InferencePool
 metadata:
-  name: granite-3-2b-epp
-  annotations:
-    activator.llm-d.ai/scale-from-zero-grace-period: "300"
-    activator.llm-d.ai/target-apiversion: apps/v1
-    activator.llm-d.ai/target-kind: Deployment
-    activator.llm-d.ai/target-name: granite-3-2b
+  name: llama3-8b-instruct-epp
 spec:
   extensionRef:
     failureMode: FailClose
     group: ""
     kind: Service
-    name: granite-3-2b-epp
+    name: llama3-8b-instruct-epp
     portNumber: 9002
   selector:
-    llm-d.ai/model: "granite-3-2b"
+    llm-d.ai/model: "llama3-8b-instruct"
     llm-d.ai/inferenceServing: "true"
   targetPortNumber: 8000
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: granite-3-2b-epp
+  name: llama3-8b-instruct-epp
   labels:
-    app: granite-3-2b-epp
+    app: llama3-8b-instruct-epp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      inferencepool: granite-3-2b-epp
+      inferencepool: llama3-8b-instruct-epp
   template:
     metadata:
       labels:
-        inferencepool: granite-3-2b-epp
+        inferencepool: llama3-8b-instruct-epp
     spec:
       containers:
       - name: epp
         image: ghcr.io/llm-d/llm-d-inference-scheduler:v0.3.2
         args:
         - --pool-name
-        - granite-3-2b-epp
+        - llama3-8b-instruct-epp
         - --pool-namespace
         - pytorch-demo
         - --pool-group
@@ -135,17 +133,12 @@ spec:
         name: plugins-config-volume
 ---
 apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: epp
----
-apiVersion: v1
 kind: Service
 metadata:
-  name: granite-3-2b-epp
+  name: llama3-8b-instruct-epp
 spec:
   selector:
-    inferencepool: granite-3-2b-epp
+    inferencepool: llama3-8b-instruct-epp
   ports:
   - name: grpc-ext-proc
     port: 9002
@@ -160,23 +153,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: granite-3-2b
+  name: llama3-8b-instruct
 spec:
-  replicas: 0 # for scale from zero
+  replicas: 1
   selector:
     matchLabels:
-      llm-d.ai/model: "granite-3-2b"
+      llm-d.ai/model: "llama3-8b-instruct"
       llm-d.ai/inferenceServing: "true"
   template:
     metadata:
       labels:
-        llm-d.ai/model: "granite-3-2b"
+        llm-d.ai/model: "llama3-8b-instruct"
         llm-d.ai/inferenceServing: "true"
     spec:
       containers:
       - args:
         - --model
-        - granite/granite-3-2b-instruct
+        - meta-llama/Llama-3.1-8B-Instruct
         - --port
         - "8000"
         image: ghcr.io/llm-d/llm-d-inference-sim:v0.5.1
@@ -197,9 +190,3 @@ spec:
         - containerPort: 8000
           name: http
           protocol: TCP
-        readinessProbe:
-          httpGet:
-             path: /health
-             port: 8000
-          initialDelaySeconds: 10 # simulate vllm startup time (optimized)
-          periodSeconds: 5
