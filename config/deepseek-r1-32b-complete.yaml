@@ -42,7 +42,8 @@ kind: InferencePool
 metadata:
   name: deepseek-r1-32b-epp
   annotations:
-    activator.llm-d.ai/scale-from-zero-grace-period: "300"
+    activator.llm-d.ai/scale-down-delay: "600s"
+    activator.llm-d.ai/scale-from-zero-grace-period: "300s"
     activator.llm-d.ai/target-apiversion: apps/v1
     activator.llm-d.ai/target-kind: Deployment
     activator.llm-d.ai/target-name: deepseek-r1-32b
